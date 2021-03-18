@@ -19,6 +19,7 @@ const TaskItem: React.FC<PropTypes> = ({ task }) => {
           {/* propsで受け取る */}
           {task.title}
         </div>
+        </div>
 
         <div className={styles.right_item}>
           <Checkbox
@@ -39,7 +40,7 @@ const TaskItem: React.FC<PropTypes> = ({ task }) => {
             <DeleteIcon className={styles.icon} />
           </IconButton>
         </div>
-      </div>
+      
     </div>
   );
 };
