@@ -22,11 +22,13 @@ const TaskItem: React.FC<PropTypes> = ({ task }) => {
         </div>
 
         <div className={styles.right_item}>
+          <IconButton>
           <Checkbox
             checked={task.completed}
             onClick={() => console.log("checkbox")}
-            className={styles.checkbox}
+            className={styles.icon}
           />
+          </IconButton>
           <IconButton
             onClick={() => console.log("edit")}
             className={styles.edit_button}

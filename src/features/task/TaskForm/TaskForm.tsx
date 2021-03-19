@@ -2,17 +2,22 @@ import React from "react";
 import styles from "./TaskForm.module.scss";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
+import {createTask} from '../TaskSlice';
+import {useDispatch} from 'react-redux';
 
 
 type Inputs = {
-  textTitle: string;
+  taskTitle: string;
 };
 
 const TaskForm: React.FC = () => {
+  const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
   const handleCreate = (data: Inputs) => {
     // dataはregisterで登録したdataが入ってくる
-    console.log(data);
+    // dispatchすることでcreateTaskが発火する。引数にTextFieldで入力した値のnameを渡す
+    // data.taskTitleをaction.payloadに渡すことができる
+    dispatch(createTask(data.taskTitle))
     reset();
   };
   return (
