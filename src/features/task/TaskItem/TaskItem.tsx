@@ -7,22 +7,26 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import Modal from "@material-ui/core/Modal";
 import TaskForm from "../TaskForm/TaskForm";
-
+import { useDispatch, useSelector } from "react-redux";
+import { handleModalOpen, selectIsModalOpen,selectTask,selectSelectedTask } from "../TaskSlice";
 
 interface PropTypes {
   task: { id: number; title: string; completed: boolean };
 }
 
 const TaskItem: React.FC<PropTypes> = ({ task }) => {
-  const [open, setOpen] = React.useState(false);
+  
+  const isModalOpen = useSelector(selectIsModalOpen);
+  const dispatch = useDispatch();
 
   // モーダルの開閉関数
   const handleOpen = () => {
-    setOpen(true);
+    dispatch(selectTask(task))
+    dispatch(handleModalOpen(true));
   };
 
   const handleClose = () => {
-    setOpen(false);
+    dispatch(handleModalOpen(false));
   };
 
   return (
@@ -43,10 +47,7 @@ const TaskItem: React.FC<PropTypes> = ({ task }) => {
             className={styles.icon}
           />
         </IconButton>
-        <IconButton
-          className={styles.edit_button}
-          onClick={handleOpen}
-        >
+        <IconButton className={styles.edit_button} onClick={handleOpen}>
           <EditIcon className={styles.icon} />
         </IconButton>
         <IconButton
@@ -57,17 +58,11 @@ const TaskItem: React.FC<PropTypes> = ({ task }) => {
         </IconButton>
       </div>
 
-      <Modal
-        open={open}
-        onClose={handleClose}
-        className={styles.modal}
-      >
+      <Modal open={isModalOpen} onClose={handleClose} className={styles.modal}>
         <div className={styles.modal_content}>
-          <div className="styles.modal_start">
-            edit task
-            {/* 条件分岐を行うためにTaskFormにeditを送ってる */}
-            <TaskForm edit/>
-          </div>
+          <div className={styles.modal_title}>edit task</div>
+          {/* 条件分岐を行うためにTaskFormにeditを送ってる */}
+          <TaskForm edit />
         </div>
       </Modal>
     </div>

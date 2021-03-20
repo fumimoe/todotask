@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./TaskList.module.scss";
 import TaskItem from "../TaskItem/TaskItem";
 import {useSelector} from 'react-redux';
-import {selectTask} from '../TaskSlice';
+import {selectTasks} from '../TaskSlice';
 
 const TaskList = () => {
   // tasksの中に[{id:1,title:'Task1',completed:false}]がはいってる
-  const tasks = useSelector(selectTask)
+  const tasks = useSelector(selectTasks)
   return (
     <div className={styles.root}>
        {/* ここでtasksの取得をしてる */}
