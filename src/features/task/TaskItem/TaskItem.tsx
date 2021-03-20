@@ -8,20 +8,25 @@ import IconButton from "@material-ui/core/IconButton";
 import Modal from "@material-ui/core/Modal";
 import TaskForm from "../TaskForm/TaskForm";
 import { useDispatch, useSelector } from "react-redux";
-import { handleModalOpen, selectIsModalOpen,selectTask,selectSelectedTask } from "../TaskSlice";
+import {
+  handleModalOpen,
+  selectIsModalOpen,
+  selectTask,
+  completedTask,
+  deleteTask
+} from "../TaskSlice";
 
 interface PropTypes {
   task: { id: number; title: string; completed: boolean };
 }
 
 const TaskItem: React.FC<PropTypes> = ({ task }) => {
-  
   const isModalOpen = useSelector(selectIsModalOpen);
   const dispatch = useDispatch();
 
   // モーダルの開閉関数
   const handleOpen = () => {
-    dispatch(selectTask(task))
+    dispatch(selectTask(task));
     dispatch(handleModalOpen(true));
   };
 
@@ -43,7 +48,7 @@ const TaskItem: React.FC<PropTypes> = ({ task }) => {
         <IconButton>
           <Checkbox
             checked={task.completed}
-            onClick={() => console.log("checkbox")}
+            onClick={() => dispatch(completedTask(task))}
             className={styles.icon}
           />
         </IconButton>
@@ -51,7 +56,7 @@ const TaskItem: React.FC<PropTypes> = ({ task }) => {
           <EditIcon className={styles.icon} />
         </IconButton>
         <IconButton
-          onClick={() => console.log("delete")}
+          onClick={() => dispatch(deleteTask(task))}
           className={styles.delete_button}
         >
           <DeleteIcon className={styles.icon} />
